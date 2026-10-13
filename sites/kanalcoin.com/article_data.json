@@ -1,0 +1,44 @@
+{
+  "url": "https://kanalcoin.com/thailand-approves-bitcoin-ethereum-etfs-october-16",
+  "title": "Thailand Approves Bitcoin and Ethereum ETFs Under New Rules",
+  "word_count": 876,
+  "internal_links": 15,
+  "external_links": 6,
+  "schemas_count": 2,
+  "schema_types": [
+    [
+      "NewsMediaOrganization",
+      "ImageObject",
+      "WebSite"
+    ],
+    [
+      "NewsArticle",
+      "BreadcrumbList"
+    ]
+  ],
+  "schema_article_type": "NewsArticle",
+  "schema_author": "Ethan Parker",
+  "schema_date_pub": "2026-10-13T02:33:55Z",
+  "schema_date_mod": "2026-10-13T02:33:55Z",
+  "schema_headline": "Thailand Approves Bitcoin and Ethereum ETFs Under New Rules",
+  "schema_image": "YES",
+  "author_visible": "Ethan Parker\nContributor",
+  "author_link": "https://kanalcoin.com/author/ethan-parker",
+  "date_visible": "2026-10-13T02:33:55",
+  "breadcrumb": "",
+  "toc": false,
+  "faq_section": false,
+  "h2_count": 4,
+  "h2s": [
+    "Thailand Approves Bitcoin and Ethereum ETFs Ahead of October 16",
+    "What the New Rules Could Change for Thailand’s Crypto Market",
+    "Key Details to Watch After the Rules Take Effect",
+    "Suggested Reads"
+  ],
+  "images_in_article": 7,
+  "og_image": "https://www.kanalcoin.com/wp-content/uploads/2026/10/thailand-approves-bitcoin-ethereum-etfs-october-16-thumbnail-768x512.jpg",
+  "meta_desc": "Thailand has approved exchange-traded funds tracking Bitcoin and Ethereum, with the regulatory framework governing these products set to take effect on October...",
+  "canonical": "https://kanalcoin.com/thailand-approves-bitcoin-ethereum-etfs-october-16",
+  "ads": 0,
+  "related_posts": 0
+}

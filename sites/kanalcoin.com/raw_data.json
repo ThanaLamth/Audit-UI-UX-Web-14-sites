@@ -1,0 +1,330 @@
+{
+  "tech": {
+    "title": "Crypto News, Market Data & Blockchain Insights",
+    "desc": "Follow breaking crypto news, live market movers, blockchain research, and practical knowledge guides on Kanalcoin.",
+    "canonical": "https://kanalcoin.com/",
+    "robots_meta": "index, follow",
+    "og_title": "Crypto News, Market Data & Blockchain Insights",
+    "og_desc": "Follow breaking crypto news, live market movers, blockchain research, and practical knowledge guides on Kanalcoin.",
+    "og_image": "",
+    "og_type": "website",
+    "tw_card": "summary_large_image",
+    "tw_site": "",
+    "viewport": "width=device-width, initial-scale=1",
+    "lang": "en",
+    "h1s": [
+      "Kanalcoin — Crypto News, Market Data & Blockchain Insights"
+    ],
+    "h2s": [
+      "Hot News",
+      "Most Read",
+      "Quick Convert",
+      "Stay Updated",
+      "Marketcap & Top Coins",
+      "Top Recommended Exchanges",
+      "Crypto Knowledge",
+      "Pro Tools"
+    ],
+    "schemaTypes": [
+      [
+        "NewsMediaOrganization",
+        "ImageObject",
+        "WebSite"
+      ],
+      [
+        "WebPage",
+        "WebSite",
+        "ImageObject",
+        "ImageObject"
+      ]
+    ],
+    "schemas_count": 2,
+    "schemas_raw": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "NewsMediaOrganization",
+            "@id": "https://kanalcoin.com/#organization",
+            "name": "Kanalcoin",
+            "url": "https://kanalcoin.com",
+            "sameAs": [
+              "https://www.facebook.com/kanalcoincom/",
+              "https://www.youtube.com/@kanalcoincom",
+              "https://telegram.me/KanalcoinOfficial",
+              "https://x.com/kanalcoin",
+              "https://www.linkedin.com/company/111788038",
+              "https://coinmarketcap.com/community/profile/kanalcoindotcom/",
+              "https://www.binance.com/en/square/profile/kanalcoin",
+              "https://substack.com/@kanalcoin",
+              "mailto:social@kanalcoin.com"
+            ],
+            "publishingPrinciples": "https://kanalcoin.com/editorial-policy",
+            "correctionsPolicy": "https://kanalcoin.com/corrections-policy",
+            "ethicsPolicy": "https://kanalcoin.com/editorial-policy",
+            "masthead": "https://kanalcoin.com/masthead",
+            "actionableFeedbackPolicy": "https://kanalcoin.com/contact",
+            "diversityPolicy": "https://kanalcoin.com/editorial-policy",
+            "missionCoveragePrioritiesPolicy": "https://kanalcoin.com/about",
+            "verificationFactCheckingPolicy": "https://kanalcoin.com/editorial-policy",
+            "unnamedSourcesPolicy": "https://kanalcoin.com/editorial-policy",
+            "ownershipFundingInfo": "https://kanalcoin.com/disclaimer",
+            "logo": {
+              "@id": "https://kanalcoin.com/#/schema/logo/image/"
+            }
+          },
+          {
+            "@type": "ImageObject",
+            "@id": "https://kanalcoin.com/#/schema/logo/image/",
+            "url": "https://kanalcoin.com/logo.webp",
+            "contentUrl": "https://kanalcoin.com/logo.webp",
+            "caption": "Kanalcoin",
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://kanalcoin.com/#website",
+            "url": "https://kanalcoin.com",
+            "name": "Kanalcoin",
+            "publisher": {
+              "@id": "https://kanalcoin.com/#organization"
+            },
+            "inLanguage": "en-US"
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://kanalcoin.com/#webpage",
+            "url": "https://kanalcoin.com/",
+            "name": "Crypto News, Market Data & Blockchain Insights",
+            "description": "Kanalcoin delivers cryptocurrency news, live market data, blockchain research, and beginner-friendly knowledge for the global web3 audience.",
+            "inLanguage": "en-US",
+            "isPartOf": {
+              "@id": "https://kanalcoin.com/#website"
+            },
+            "about": {
+              "@id": "https://kanalcoin.com/#organization"
+            },
+            "primaryImageOfPage": {
+              "@id": "https://kanalcoin.com/#primaryimage"
+            },
+            "image": {
+              "@id": "https://kanalcoin.com/#primaryimage"
+            },
+            "potentialAction": {
+              "@type": "ReadAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://kanalcoin.com/"
+              }
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://kanalcoin.com/#website",
+            "url": "https://kanalcoin.com/",
+            "name": "Kanalcoin",
+            "description": "Kanalcoin delivers cryptocurrency news, live market data, blockchain research, and beginner-friendly knowledge for the global web3 audience.",
+            "inLanguage": "en-US",
+            "publisher": {
+              "@id": "https://kanalcoin.com/#organization"
+            }
+          },
+          {
+            "@type": "ImageObject",
+            "@id": "https://kanalcoin.com/#/schema/logo/image/",
+            "url": "https://kanalcoin.com/logo.webp",
+            "contentUrl": "https://kanalcoin.com/logo.webp",
+            "caption": "Kanalcoin",
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "ImageObject",
+            "@id": "https://kanalcoin.com/#primaryimage",
+            "url": "https://kanalcoin.com/logo.webp",
+            "contentUrl": "https://kanalcoin.com/logo.webp",
+            "caption": "Crypto News, Market Data & Blockchain Insights"
+          }
+        ]
+      }
+    ],
+    "internal_links_count": 59,
+    "imgs_no_alt": 0,
+    "imgs_total": 24
+  },
+  "perf": {
+    "domInteractive": 202,
+    "domComplete": 417,
+    "loadEvent": 418,
+    "fcp": 472,
+    "resources_total": 113,
+    "slow_resources": [
+      {
+        "f": "tether.svg",
+        "ms": 619
+      },
+      {
+        "f": "binancecoin.svg",
+        "ms": 621
+      },
+      {
+        "f": "ripple.svg",
+        "ms": 628
+      },
+      {
+        "f": "bnb-bnb-logo.png",
+        "ms": 2759
+      },
+      {
+        "f": "bybit-logo.svg",
+        "ms": 644
+      }
+    ]
+  },
+  "robots": "User-Agent: *\nAllow: /\nDisallow: /api/\n\nUser-Agent: GPTBot\nAllow: /\n\nUser-Agent: ChatGPT-User\nAllow: /\n\nUser-Agent: ClaudeBot\nAllow: /\n\nUser-Agent: PerplexityBot\nAllow: /\n\nUser-Agent: Google-Extended\nAllow: /\n\nUser-Agent: Bytespider\nDisallow: /\n\nSitemap: https://kanalcoin.com/sitemap.xml\nSitemap: https://kanalcoin.com/news-sitemap.xml\n",
+  "sitemap": {
+    "url": "https://kanalcoin.com/sitemap.xml",
+    "top_level_count": 138,
+    "children": [
+      "https://kanalcoin.com/static-sitemap.xml",
+      "https://kanalcoin.com/news-sitemap.xml",
+      "https://kanalcoin.com/sitemaps/news/1",
+      "https://kanalcoin.com/sitemaps/news/2",
+      "https://kanalcoin.com/sitemaps/news/3",
+      "https://kanalcoin.com/sitemaps/news/4",
+      "https://kanalcoin.com/sitemaps/news/5",
+      "https://kanalcoin.com/sitemaps/news/6",
+      "https://kanalcoin.com/sitemaps/news/7",
+      "https://kanalcoin.com/sitemaps/news/8"
+    ],
+    "first_child_url_count": 29
+  },
+  "security": {
+    "hsts": "MISSING",
+    "csp": "MISSING",
+    "x-frame-options": "DENY",
+    "x-content-type-options": "nosniff",
+    "permissions-policy": "MISSING",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "server": "cloudflare"
+  },
+  "article": {
+    "url": "https://kanalcoin.com/tools/portfolio-tracker",
+    "title": "Crypto Portfolio Tracker",
+    "author": "",
+    "author_link": "",
+    "date": "",
+    "word_count": 149,
+    "internal_links": 14,
+    "external_links": 4,
+    "schemas_count": 1,
+    "schemaTypes": [
+      [
+        "NewsMediaOrganization",
+        "ImageObject",
+        "WebSite"
+      ]
+    ],
+    "schemas_raw": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "NewsMediaOrganization",
+            "@id": "https://kanalcoin.com/#organization",
+            "name": "Kanalcoin",
+            "url": "https://kanalcoin.com",
+            "sameAs": [
+              "https://www.facebook.com/kanalcoincom/",
+              "https://www.youtube.com/@kanalcoincom",
+              "https://telegram.me/KanalcoinOfficial",
+              "https://x.com/kanalcoin",
+              "https://www.linkedin.com/company/111788038",
+              "https://coinmarketcap.com/community/profile/kanalcoindotcom/",
+              "https://www.binance.com/en/square/profile/kanalcoin",
+              "https://substack.com/@kanalcoin",
+              "mailto:social@kanalcoin.com"
+            ],
+            "publishingPrinciples": "https://kanalcoin.com/editorial-policy",
+            "correctionsPolicy": "https://kanalcoin.com/corrections-policy",
+            "ethicsPolicy": "https://kanalcoin.com/editorial-policy",
+            "masthead": "https://kanalcoin.com/masthead",
+            "actionableFeedbackPolicy": "https://kanalcoin.com/contact",
+            "diversityPolicy": "https://kanalcoin.com/editorial-policy",
+            "missionCoveragePrioritiesPolicy": "https://kanalcoin.com/about",
+            "verificationFactCheckingPolicy": "https://kanalcoin.com/editorial-policy",
+            "unnamedSourcesPolicy": "https://kanalcoin.com/editorial-policy",
+            "ownershipFundingInfo": "https://kanalcoin.com/disclaimer",
+            "logo": {
+              "@id": "https://kanalcoin.com/#/schema/logo/image/"
+            }
+          },
+          {
+            "@type": "ImageObject",
+            "@id": "https://kanalcoin.com/#/schema/logo/image/",
+            "url": "https://kanalcoin.com/logo.webp",
+            "contentUrl": "https://kanalcoin.com/logo.webp",
+            "caption": "Kanalcoin",
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://kanalcoin.com/#website",
+            "url": "https://kanalcoin.com",
+            "name": "Kanalcoin",
+            "publisher": {
+              "@id": "https://kanalcoin.com/#organization"
+            },
+            "inLanguage": "en-US"
+          }
+        ]
+      }
+    ],
+    "breadcrumb": "",
+    "toc": false,
+    "ads_count": 0,
+    "h2_count": 0,
+    "has_faq": false,
+    "images": 0
+  },
+  "trust": {
+    "about": {
+      "status": 200,
+      "url": "https://kanalcoin.com/about",
+      "word_count": 434
+    },
+    "editorial": {
+      "status": 200,
+      "url": "https://kanalcoin.com/editorial-policy",
+      "word_count": 301
+    },
+    "team": {
+      "status": 200,
+      "url": "https://kanalcoin.com/authors",
+      "word_count": 557
+    },
+    "contact": {
+      "status": 200,
+      "url": "https://kanalcoin.com/contact",
+      "word_count": 135
+    },
+    "privacy": {
+      "status": 200,
+      "url": "https://kanalcoin.com/privacy-policy",
+      "word_count": 289
+    }
+  },
+  "geo": {
+    "llms_txt_status": 404,
+    "llms_txt_content": "",
+    "gptbot": true,
+    "claudebot": true,
+    "perplexitybot": true,
+    "google_extended": true,
+    "ahrefs": false
+  }
+}

@@ -1,0 +1,39 @@
+﻿{
+    "slug":  "kanalcoin.com",
+    "categories":  {
+                       "geo":  {
+                                   "score":  8,
+                                   "grade":  "B",
+                                   "max":  10
+                               },
+                       "ui_ux":  {
+                                     "score":  14,
+                                     "grade":  "C+",
+                                     "max":  20
+                                 },
+                       "performance":  {
+                                           "score":  20,
+                                           "grade":  "A+",
+                                           "max":  20
+                                       },
+                       "technical_seo":  {
+                                             "score":  18,
+                                             "grade":  "B+",
+                                             "max":  25
+                                         },
+                       "security":  {
+                                        "score":  8,
+                                        "grade":  "C",
+                                        "max":  15
+                                    },
+                       "eeat":  {
+                                    "score":  10,
+                                    "grade":  "C+",
+                                    "max":  15
+                                }
+                   },
+    "site":  "https://kanalcoin.com",
+    "audit_date":  "2026-10-13",
+    "max":  100,
+    "overall":  70
+}
