@@ -1,0 +1,39 @@
+{
+  "site": "https://defiliban.io",
+  "slug": "defiliban.io",
+  "audit_date": "2026-10-13",
+  "overall": 59,
+  "max": 100,
+  "categories": {
+    "technical_seo": {
+      "score": 18,
+      "max": 25,
+      "grade": "B+"
+    },
+    "performance": {
+      "score": 18,
+      "max": 20,
+      "grade": "A+"
+    },
+    "ui_ux": {
+      "score": 8,
+      "max": 20,
+      "grade": "C"
+    },
+    "eeat": {
+      "score": 4,
+      "max": 15,
+      "grade": "D"
+    },
+    "security": {
+      "score": 3,
+      "max": 10,
+      "grade": "D"
+    },
+    "geo": {
+      "score": 8,
+      "max": 10,
+      "grade": "A"
+    }
+  }
+}
