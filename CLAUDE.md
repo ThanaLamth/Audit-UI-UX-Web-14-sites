@@ -1,95 +1,96 @@
-﻿# CLAUDE.md — Instructions for AI Agents Reading This Repo
+﻿# CLAUDE.md — Hướng dẫn cho AI Agent
 
-## Purpose
-This repo contains unified website audits (Technical SEO + UI/UX + E-E-A-T + Security + GEO).
-When you read this repo, your job is to understand what needs to be fixed on each site.
+## Mục đích repo này
 
-## How to Navigate
+Đây là kết quả audit UI/UX + Technical SEO cho 13 crypto sites.
+Mỗi site có điểm số, danh sách lỗi ưu tiên, và screenshots.
+**Nhiệm vụ của bạn:** Đọc issues, rồi vào từng website để fix code.
 
-### Step 1 — Get the big picture
-Read `README.md` to see which sites have been audited and their overall scores.
+## Cách đọc dữ liệu
 
-### Step 2 — Per-site audit
-Each site lives at `sites/<sitename>/`. Read in this order:
-1. `scorecard.json` — overall scores per category (0-100)
-2. `issues.json` — structured list of all issues with priority + fix instructions
-3. `audit-YYYY-MM-DD.md` — full narrative report with context
-4. `screenshots/` — visual evidence (reference filenames from issues.json)
+```
+sites/<domain>/
+├── audit-YYYY-MM-DD.md   # Báo cáo đầy đủ (đọc cái này trước)
+├── issues.json            # Danh sách lỗi có priority + fix hướng dẫn
+├── scorecard.json         # Điểm từng hạng mục
+└── screenshots/           # Ảnh chụp desktop + mobile
+```
 
-### Step 3 — Prioritize work
-Issues in `issues.json` are pre-sorted by priority:
-- `critical` — fix immediately, blocking SEO/UX
-- `high` — fix this sprint
-- `medium` — fix this month
-- `low` — backlog
+## Priority thứ tự fix
 
-## issues.json Schema
+1. `critical` — fix ngay, ảnh hưởng traffic lớn
+2. `high` — fix trong sprint này
+3. `medium` — backlog
+4. `low` — nice-to-have
 
+## Lỗi phổ biến nhất (critical across all sites)
+
+| Lỗi | Ảnh hưởng | Fix |
+|-----|-----------|-----|
+| OG Image missing | CTR social -40-60% | Add `<meta property="og:image" content="...1200x630...">` |
+| NewsArticle JSON-LD missing | Không có Google News rich result | Add `<script type="application/ld+json">{"@type":"NewsArticle"...}</script>` |
+| No llms.txt | AI bots không index → mất GEO | Tạo `/llms.txt` theo format llms.txt spec |
+| CSP header missing | Security risk | Add `Content-Security-Policy` header ở server/nginx |
+| No author page | E-E-A-T thấp | Tạo `/author/<name>` pages với bio + photo |
+
+## Cách dùng repo này để fix
+
+### Bước 1 — Chọn site cần fix
+```
+Đọc README.md → xem leaderboard → chọn site điểm thấp nhất
+```
+
+### Bước 2 — Đọc issues.json của site đó
 ```json
+// Mỗi issue có structure:
 {
-  "site": "kanalcoin.com",
-  "audit_date": "2026-10-13",
-  "auditor": "Codex AI",
-  "issues": [
-    {
-      "id": "K-001",
-      "priority": "critical",
-      "category": "technical_seo | ui_ux | eeat | security | geo",
-      "title": "Short title of the issue",
-      "location": "URL or page where issue exists",
-      "element": "HTML element or section",
-      "what": "What is wrong",
-      "why": "Why it matters (impact)",
-      "fix": "Exact fix instruction",
-      "effort": "15min | 1h | 1day | 1week",
-      "evidence": "screenshots/filename.png or null"
-    }
-  ]
+  "id": "XX-001",
+  "priority": "critical",
+  "category": "technical_seo",
+  "title": "OG Image missing on homepage",
+  "location": "https://example.com",
+  "element": "head og:image",
+  "what": "og:image tag absent",
+  "why": "No social share preview — CTR -40-60%",
+  "fix": "Add meta property og:image 1200x630px to homepage head",
+  "effort": "30min",
+  "evidence": "01_home_top.png"
 }
 ```
 
-## scorecard.json Schema
+### Bước 3 — Vào repo code của site đó để fix
 
-```json
-{
-  "site": "kanalcoin.com",
-  "audit_date": "2026-10-13",
-  "overall": 70,
-  "categories": {
-    "technical_seo": { "score": 18, "max": 25, "grade": "B" },
-    "performance":   { "score": 20, "max": 20, "grade": "A+" },
-    "ui_ux":         { "score": 14, "max": 20, "grade": "C+" },
-    "eeat":          { "score": 10, "max": 15, "grade": "C+" },
-    "security":      { "score": 8,  "max": 15, "grade": "C" },
-    "geo":           { "score": 8,  "max": 15, "grade": "C" }
-  }
-}
+Mỗi site dùng WordPress/Next.js/static. Fix theo `fix` field trong issues.json.
+
+### Bước 4 — Verify sau khi fix
+
+Re-run audit để confirm điểm tăng:
+```bash
+cd C:\Users\admin\AppData\Local\Temp\audit-web-14-sites
+python tools/audit_site.py https://<domain> --proxy 103.82.22.77:28718:1ke2:1ke2 --push
 ```
 
-## How to Generate Fix Instructions
+## Leaderboard tóm tắt (để biết site nào cần fix nhất)
 
-When asked "what needs to be fixed on site X":
-1. Load `sites/X/issues.json`
-2. Filter by `priority: critical` first
-3. For each issue, output: **[ID] Title** — Fix: `fix field` — Effort: `effort field`
-4. Group by category
-5. Reference screenshot filename if available
+| Site | Score | Điểm yếu nhất |
+|------|-------|----------------|
+| kanalcoin.com | 70/100 | Security (3/10) |
+| tokentopnews.com | 69/100 | E-E-A-T (8/15) |
+| defiliban.io | 69/100 | Security (3/10) |
+| nftenex.com | 65/100 | Tech SEO (13/25) |
+| coinlineup.com | 63/100 | E-E-A-T (5/15) |
+| theccpress.com | 61/100 | Tech SEO (11/25) |
+| aicryptocore.com | 59/100 | UI/UX (8/20) |
+| coinwy.com | 59/100 | E-E-A-T (2/15) |
+| marketbit.net | 57/100 | E-E-A-T (2/15) |
+| trustscrypto.com | 56/100 | UI/UX (8/20) |
+| bitcoininfonews.com | 55/100 | GEO (5/10) |
+| cryptodailyalert.com | 55/100 | GEO (4/10) |
+| coinlive.me | 50/100 | Tech SEO (11/25), E-E-A-T (3/15) |
 
-## When a New Audit is Added
+## Lưu ý kỹ thuật
 
-The audit script (`tools/audit_site.py`) auto-generates:
-- `issues.json`
-- `scorecard.json`
-- `audit-YYYY-MM-DD.md`
-- `screenshots/*.png`
-
-Then pushes to this repo. You will see a new commit with message:
-`audit(<sitename>): YYYY-MM-DD — score X/100`
-
-## Notes for Claude
-- Do NOT guess fixes — only use data from issues.json
-- Screenshots are evidence, not instructions
-- `effort` field is realistic estimate — do not promise faster
-- If `evidence` is null, the issue was detected via code/headers, not visually
-- Priority order: critical > high > medium > low
-- Multiple issues can share the same fix (e.g., adding a footer fixes 3 issues at once)
+- Proxy: `103.82.22.77:28718` (user: `1ke2`, pass: `1ke2`)
+- Tinyfish API: `sk-tinyfish-4XtV65QCqzoU1fs3tGF-RSIWrrX-9M84`
+- Audit script: `tools/audit_site.py`
+- Re-audit sau fix: `python tools/audit_site.py https://<domain> --proxy ... --push`
