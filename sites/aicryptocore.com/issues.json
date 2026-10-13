@@ -1,0 +1,131 @@
+{
+  "site": "https://aicryptocore.com",
+  "slug": "aicryptocore.com",
+  "audit_date": "2026-10-13",
+  "overall_score": 55,
+  "summary": {
+    "critical": 0,
+    "high": 3,
+    "medium": 5,
+    "low": 1
+  },
+  "issues": [
+    {
+      "id": "AI-001",
+      "priority": "high",
+      "category": "security",
+      "title": "HSTS header missing",
+      "location": "https://aicryptocore.com",
+      "element": "HTTP Headers",
+      "what": "HSTS not set",
+      "why": "SSL stripping vulnerability",
+      "fix": "Cloudflare SSL/TLS Edge Certs: Enable HSTS max-age=31536000",
+      "effort": "5min",
+      "evidence": null
+    },
+    {
+      "id": "AI-003",
+      "priority": "high",
+      "category": "ui_ux",
+      "title": "No search bar",
+      "location": "https://aicryptocore.com",
+      "element": "Navigation",
+      "what": "No search input",
+      "why": "High bounce rate",
+      "fix": "Add search to header nav",
+      "effort": "1day",
+      "evidence": "04_news.png"
+    },
+    {
+      "id": "AI-005",
+      "priority": "high",
+      "category": "eeat",
+      "title": "No author attribution",
+      "location": "",
+      "element": "byline",
+      "what": "No visible author",
+      "why": "E-E-A-T fail for YMYL crypto",
+      "fix": "Add author byline: name, photo, link to /author/ bio",
+      "effort": "1day",
+      "evidence": null
+    },
+    {
+      "id": "AI-002",
+      "priority": "medium",
+      "category": "security",
+      "title": "CSP header missing",
+      "location": "https://aicryptocore.com",
+      "element": "HTTP Headers",
+      "what": "CSP not present",
+      "why": "XSS vulnerability",
+      "fix": "Add Content-Security-Policy via Cloudflare Transform Rules",
+      "effort": "2h",
+      "evidence": null
+    },
+    {
+      "id": "AI-004",
+      "priority": "medium",
+      "category": "technical_seo",
+      "title": "Images missing alt (1)",
+      "location": "https://aicryptocore.com",
+      "element": "img",
+      "what": "1 imgs no alt",
+      "why": "WCAG + Google image indexing",
+      "fix": "Add alt text to all images",
+      "effort": "2h",
+      "evidence": null
+    },
+    {
+      "id": "AI-006",
+      "priority": "medium",
+      "category": "ui_ux",
+      "title": "No Table of Contents",
+      "location": "",
+      "element": "article",
+      "what": "No TOC on multi-H2 article",
+      "why": "Low dwell time, miss SERP sitelinks",
+      "fix": "Auto-generate TOC from H2/H3 after intro",
+      "effort": "1day",
+      "evidence": null
+    },
+    {
+      "id": "AI-007",
+      "priority": "medium",
+      "category": "geo",
+      "title": "No FAQ section",
+      "location": "",
+      "element": "article",
+      "what": "No FAQ or FAQPage schema",
+      "why": "Miss PAA boxes in SERP",
+      "fix": "Add 3-5 QA + FAQPage JSON-LD at end of analysis articles",
+      "effort": "2h per template",
+      "evidence": null
+    },
+    {
+      "id": "AI-008",
+      "priority": "medium",
+      "category": "eeat",
+      "title": "Low word count (0)",
+      "location": "",
+      "element": "body",
+      "what": "Only 0 words",
+      "why": "Thin content",
+      "fix": "Expand analysis articles to 1000-1500 words",
+      "effort": "ongoing",
+      "evidence": null
+    },
+    {
+      "id": "AI-009",
+      "priority": "low",
+      "category": "ui_ux",
+      "title": "No related posts",
+      "location": "",
+      "element": "article bottom",
+      "what": "No related articles",
+      "why": "High bounce rate",
+      "fix": "Add 3-4 related cards at bottom",
+      "effort": "1day",
+      "evidence": null
+    }
+  ]
+}
