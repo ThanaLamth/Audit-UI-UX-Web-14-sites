@@ -2,7 +2,7 @@
   "site": "https://bitcoininfonews.com",
   "slug": "bitcoininfonews.com",
   "audit_date": "2026-10-13",
-  "overall": 49,
+  "overall": 55,
   "max": 100,
   "categories": {
     "technical_seo": {
@@ -21,9 +21,9 @@
       "grade": "C"
     },
     "eeat": {
-      "score": 2,
+      "score": 8,
       "max": 15,
-      "grade": "D"
+      "grade": "C+"
     },
     "security": {
       "score": 3,
