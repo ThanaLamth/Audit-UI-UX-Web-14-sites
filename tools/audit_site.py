@@ -28,14 +28,14 @@ def open_session(proxy_str=""):
         if len(parts) == 4:
             cmd += ["--proxy-url", f"http://{parts[0]}:{parts[1]}", "--proxy-username", parts[2]]
             env["TINYFISH_PROXY_PASSWORD"] = parts[3]
-    r = subprocess.run(cmd, capture_output=True, text=True, env=env)
+    env["TINYFISH_API_KEY"] = os.environ.get("TINYFISH_API_KEY",""); r = subprocess.run(" ".join(cmd), capture_output=True, text=True, env=env, shell=True)
     return json.loads(r.stdout.strip())["cdp_url"]
 
 async def m1_screenshots(page, target, ss_dir):
     shots = {}
     async def shoot(name, url, scroll=0):
         await safe_goto(page, url, "load", 40000)
-        await asyncio.sleep(2)
+        await asyncio.sleep(1)
         if scroll:
             expr = "window.scrollTo(0, document.body.scrollHeight * " + str(scroll) + ")"
             await page.evaluate(expr)
@@ -67,7 +67,7 @@ async def m1_screenshots(page, target, ss_dir):
 
 async def m2_tech(page, target):
     await safe_goto(page, target, "load", 40000)
-    await asyncio.sleep(2)
+    await asyncio.sleep(1)
     JS = """() => {
         const qs = s => document.querySelector(s);
         const schemas = Array.from(document.querySelectorAll('script[type="application/ld+json"]'))
@@ -118,12 +118,19 @@ async def m4_crawl(page, target):
             D["sitemap_url"] = line.split(":",1)[1].strip(); break
     if D["sitemap_url"]:
         await safe_goto(page, D["sitemap_url"], "load", 20000)
-        sm = await page.content()
-        locs = re.findall(r"<loc>(.*?)</loc>", sm)
-        D["sitemap_children"] = len(locs)
-        if locs:
-            await safe_goto(page, locs[0], "load", 20000)
-            D["sitemap_first_child_urls"] = (await page.content()).count("<loc>")
+        await asyncio.sleep(1)
+        try:
+            sm = await page.content()
+            locs = re.findall(r"<loc>(.*?)</loc>", sm)
+            D["sitemap_children"] = len(locs)
+            if locs:
+                await safe_goto(page, locs[0], "load", 20000)
+                await asyncio.sleep(1)
+                try: D["sitemap_first_child_urls"] = (await page.content()).count("<loc>")
+                except: D["sitemap_first_child_urls"] = 0
+        except Exception as e:
+            print(f"  WARN sitemap: {e}")
+            D["sitemap_children"] = 0
     D["ai_bots"] = {"GPTBot":"GPTBot" in robots,"ClaudeBot":"ClaudeBot" in robots,
                     "PerplexityBot":"PerplexityBot" in robots,"Google-Extended":"Google-Extended" in robots}
     r2 = await safe_goto(page, target+"/llms.txt", "load", 10000)
@@ -143,7 +150,7 @@ async def m4_crawl(page, target):
     trust = {}
     for name, paths in trust_map.items():
         for path in paths:
-            rr = await safe_goto(page, target+path, "load", 15000)
+            rr = await safe_goto(page, target+path, "load", 8000)
             if rr and rr.status==200:
                 trust[name] = {"status":200,"url":target+path}; break
         if name not in trust: trust[name] = {"status":404}
@@ -154,21 +161,28 @@ async def m5_article(page, target, sitemap_url=""):
     article_url = ""
     if sitemap_url:
         await safe_goto(page, sitemap_url, "load", 20000)
-        sm = await page.content()
+        await asyncio.sleep(1)
+        try:
+            sm = await page.content()
+        except Exception:
+            sm = ""
         for loc in re.findall(r"<loc>(.*?)</loc>", sm):
             if "news" in loc.lower() or "post" in loc.lower():
                 await safe_goto(page, loc, "load", 20000)
-                child = await page.content()
+                try:
+                    child = await page.content()
+                except Exception:
+                    child = ""
                 arts = [u for u in re.findall(r"<loc>(.*?)</loc>", child)
                         if u.count("/")>=4 and not re.search(r"tool|category|tag|author|page",u)]
                 if arts: article_url = arts[0]; break
     if not article_url:
         await safe_goto(page, target, "load", 40000)
-        await asyncio.sleep(2)
+        await asyncio.sleep(1)
         article_url = await page.evaluate('() => { const links = Array.from(document.querySelectorAll("a[href]")).map(a=>a.href).filter(h=>h.includes(location.hostname)&&h.split("/").filter(Boolean).length>=4&&!h.includes("#")&&!/tool|category|tag|author/.test(h)); return links[0]||""; }')
     if not article_url: return {"error":"no article found"}
     await safe_goto(page, article_url, "load", 45000)
-    await asyncio.sleep(2)
+    await asyncio.sleep(1)
     JS = """() => {
         const schemas = Array.from(document.querySelectorAll('script[type="application/ld+json"]'))
             .map(s=>{try{return JSON.parse(s.textContent)}catch(e){return null}}).filter(Boolean);
@@ -264,8 +278,8 @@ def score_all(tech, perf, crawl, article):
     if crawl.get("sitemap_url"): g+=1
     if article.get("faq"): g+=1
     S["geo"] = {"score":min(g,10),"max":10}
-    S["overall"] = sum(v["score"] for v in S.values())
-    S["max"] = sum(v["max"] for v in S.values())
+    S["overall"] = sum(v["score"] for v in S.values() if isinstance(v,dict))
+    S["max"] = sum(v["max"] for v in S.values() if isinstance(v,dict))
     for v in S.values():
         if isinstance(v,dict) and "score" in v: v["grade"]=grade(v["score"],v["max"])
     return S
@@ -402,8 +416,24 @@ async def audit(target, proxy_str="", push=False):
         tech["_site"]=slug; tech["_base"]=target
         print("[M3] Performance..."); perf=await m3_perf(page,target)
         print(f"  FCP:{perf.get('fcp_ms')}ms  Load:{perf.get('load_ms')}ms")
-        print("[M4] Crawlability+Security+GEO..."); crawl=await m4_crawl(page,target)
-        print("[M5] Article audit..."); article=await m5_article(page,target,crawl.get("sitemap_url",""))
+        print("[M4] Crawlability+Security+GEO...")
+        try:
+            crawl=await m4_crawl(page,target)
+        except Exception as e:
+            print(f"  WARN M4: {str(e)[:80]}")
+            crawl={"sitemap_url":"","ai_bots":{},"llms_txt_status":404,"security_headers":{},"trust_pages":{}}
+        print("[M5] Article audit (fresh session)...")
+        try:
+            cdp_url2 = open_session(proxy_str)
+            browser2 = await pw.chromium.connect_over_cdp(cdp_url2)
+            ctx2 = browser2.contexts[0]
+            page2 = ctx2.pages[0] if ctx2.pages else await ctx2.new_page()
+            await page2.set_viewport_size({"width":1440,"height":900})
+            article=await m5_article(page2,target,crawl.get("sitemap_url",""))
+            await browser2.close()
+        except Exception as e:
+            print(f"  WARN M5: {str(e)[:80]}")
+            article={"error":str(e),"word_count":0,"schema_article":"MISSING"}
         print(f"  Words:{article.get('word_count',0)}  Schema:{article.get('schema_article')}")
     scores=score_all(tech,perf,crawl,article)
     issues=build_issues(tech,perf,crawl,article,shots)
@@ -436,3 +466,8 @@ def main():
 
 if __name__=="__main__":
     main()
+
+
+
+
+
