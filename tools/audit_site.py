@@ -174,12 +174,12 @@ async def m5_article(page, target, sitemap_url=""):
                 except Exception:
                     child = ""
                 arts = [u for u in re.findall(r"<loc>(.*?)</loc>", child)
-                        if u.count("/")>=4 and not re.search(r"tool|category|tag|author|page",u)]
+                        if u.count("/")>=3 and not re.search(r"tool|category|tag|author|page",u)]
                 if arts: article_url = arts[0]; break
     if not article_url:
         await safe_goto(page, target, "load", 40000)
         await asyncio.sleep(1)
-        article_url = await page.evaluate('() => { const links = Array.from(document.querySelectorAll("a[href]")).map(a=>a.href).filter(h=>h.includes(location.hostname)&&h.split("/").filter(Boolean).length>=4&&!h.includes("#")&&!/tool|category|tag|author/.test(h)); return links[0]||""; }')
+        article_url = await page.evaluate('() => { const links = Array.from(document.querySelectorAll("a[href]")).map(a=>a.href).filter(h=>h.includes(location.hostname)&&h.split("/").filter(Boolean).length>=3&&!h.includes("#")&&!/tool|category|tag|author/.test(h)); return links[0]||""; }')
     if not article_url: return {"error":"no article found"}
     await safe_goto(page, article_url, "load", 45000)
     await asyncio.sleep(1)
@@ -426,8 +426,10 @@ async def audit(target, proxy_str="", push=False):
         try:
             cdp_url2 = open_session(proxy_str)
             browser2 = await pw.chromium.connect_over_cdp(cdp_url2)
-            ctx2 = browser2.contexts[0]
-            page2 = ctx2.pages[0] if ctx2.pages else await ctx2.new_page()
+            ctxs2 = browser2.contexts
+            ctx2 = ctxs2[0] if ctxs2 else await browser2.new_context()
+            pages2 = ctx2.pages
+            page2 = pages2[0] if pages2 else await ctx2.new_page()
             await page2.set_viewport_size({"width":1440,"height":900})
             article=await m5_article(page2,target,crawl.get("sitemap_url",""))
             await browser2.close()
@@ -466,6 +468,7 @@ def main():
 
 if __name__=="__main__":
     main()
+
 
 
 
