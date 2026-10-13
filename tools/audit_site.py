@@ -34,7 +34,7 @@ def open_session(proxy_str=""):
 async def m1_screenshots(page, target, ss_dir):
     shots = {}
     async def shoot(name, url, scroll=0):
-        await safe_goto(page, url, "load", 40000)
+        await safe_goto(page, url, "domcontentloaded", 25000)
         await asyncio.sleep(1)
         if scroll:
             expr = "window.scrollTo(0, document.body.scrollHeight * " + str(scroll) + ")"
@@ -53,7 +53,7 @@ async def m1_screenshots(page, target, ss_dir):
         await shoot("04_news", news_url)
         await shoot("05_news_bottom", news_url, 1.0)
     for p in ["/about","/about-us"]:
-        r = await safe_goto(page, target+p, "load", 20000)
+        r = await safe_goto(page, target+p, "domcontentloaded", 15000)
         if r and r.status == 200:
             await asyncio.sleep(1)
             path = str(ss_dir / "06_about.png")
@@ -145,17 +145,64 @@ async def m4_crawl(page, target):
         "referrer_policy": h.get("referrer-policy","MISSING"),
         "server": h.get("server","hidden"),
     }
-    trust_map = {"about":["/about","/about-us"],"editorial":["/editorial-policy"],
-                 "team":["/our-team","/team"],"contact":["/contact"],"privacy":["/privacy-policy"]}
+    trust_map = {"about":"/about","editorial":"/editorial-policy",
+                 "team":"/our-team","contact":"/contact","privacy":"/privacy-policy"}
     trust = {}
-    for name, paths in trust_map.items():
-        for path in paths:
-            rr = await safe_goto(page, target+path, "load", 8000)
-            if rr and rr.status==200:
-                trust[name] = {"status":200,"url":target+path}; break
-        if name not in trust: trust[name] = {"status":404}
+    for name, path in trust_map.items():
+        try:
+            rr = await asyncio.wait_for(safe_goto(page, target+path, "load", 6000), timeout=7)
+            trust[name] = {"status": rr.status if rr else 404, "url": target+path}
+        except Exception:
+            trust[name] = {"status": 404}
     D["trust_pages"] = trust
     return D
+
+
+def fetch_article_url(target, sitemap_url=""):
+    import subprocess, json as _j
+    env = os.environ.copy()
+    if sitemap_url:
+        try:
+            r = subprocess.run("tinyfish fetch content get --format json " + sitemap_url,
+                capture_output=True, text=True, env=env, shell=True, timeout=15)
+            d = _j.loads(r.stdout).get('results',[])
+            locs = re.findall(r"<loc>(.*?)</loc>", d[0].get("text","") if d else "")
+            for loc in locs:
+                if "news" in loc.lower() or "post" in loc.lower():
+                    r2 = subprocess.run("tinyfish fetch content get --format json " + loc,
+                        capture_output=True, text=True, env=env, shell=True, timeout=15)
+                    d2 = _j.loads(r2.stdout).get('results',[])
+                    clocs = re.findall(r"<loc>(.*?)</loc>", d2[0].get("text","") if d2 else "")
+                    arts = [u for u in clocs if u.count("/")>=3 and not re.search(r"tool|category|tag|author|page",u)]
+                    if arts: return arts[0]
+        except Exception as e:
+            print(f"  WARN sitemap fetch: {e}")
+    try:
+        r = subprocess.run("tinyfish fetch content get --format json --links " + target,
+            capture_output=True, text=True, env=env, shell=True, timeout=20)
+        d = _j.loads(r.stdout).get('results',[])
+        links = d[0].get("links",[]) if d else []
+        for lk in links:
+            url = lk.get("url","")
+            if (url.startswith(target) and url != target and
+                url.count("/")>=3 and not re.search(r"tool|category|tag|author|#",url)):
+                return url
+    except Exception as e:
+        print(f"  WARN homepage fetch: {e}")
+    return ""
+
+def fetch_article_words(article_url):
+    import subprocess, json as _j
+    env = os.environ.copy()
+    try:
+        r = subprocess.run("tinyfish fetch content get --format json " + article_url,
+            capture_output=True, text=True, env=env, shell=True, timeout=20)
+        d = _j.loads(r.stdout).get('results',[])
+        if not d: return 0, ""
+        text = d[0].get("text","")
+        return len(text.split()), d[0].get("author","") or ""
+    except:
+        return 0, ""
 
 async def m5_article(page, target, sitemap_url=""):
     article_url = ""
@@ -181,7 +228,7 @@ async def m5_article(page, target, sitemap_url=""):
         await asyncio.sleep(1)
         article_url = await page.evaluate('() => { const links = Array.from(document.querySelectorAll("a[href]")).map(a=>a.href).filter(h=>h.includes(location.hostname)&&h.split("/").filter(Boolean).length>=3&&!h.includes("#")&&!/tool|category|tag|author/.test(h)); return links[0]||""; }')
     if not article_url: return {"error":"no article found"}
-    await safe_goto(page, article_url, "load", 45000)
+    await safe_goto(page, article_url, "domcontentloaded", 25000)
     await asyncio.sleep(1)
     JS = """() => {
         const schemas = Array.from(document.querySelectorAll('script[type="application/ld+json"]'))
@@ -422,21 +469,49 @@ async def audit(target, proxy_str="", push=False):
         except Exception as e:
             print(f"  WARN M4: {str(e)[:80]}")
             crawl={"sitemap_url":"","ai_bots":{},"llms_txt_status":404,"security_headers":{},"trust_pages":{}}
-        print("[M5] Article audit (fresh session)...")
+        print("[M5] Article audit (fetch+browser)...")
         try:
-            cdp_url2 = open_session(proxy_str)
-            browser2 = await pw.chromium.connect_over_cdp(cdp_url2)
-            ctxs2 = browser2.contexts
-            ctx2 = ctxs2[0] if ctxs2 else await browser2.new_context()
-            pages2 = ctx2.pages
-            page2 = pages2[0] if pages2 else await ctx2.new_page()
-            await page2.set_viewport_size({"width":1440,"height":900})
-            article=await m5_article(page2,target,crawl.get("sitemap_url",""))
-            await browser2.close()
+            loop = asyncio.get_event_loop()
+            art_url = await loop.run_in_executor(None, fetch_article_url, target, crawl.get("sitemap_url",""))
+            print(f"  Article: {(art_url or 'NOT FOUND')[:80]}")
+            if art_url:
+                wc, auth = await loop.run_in_executor(None, fetch_article_words, art_url)
+                article = {"url":art_url,"word_count":wc,"author_visible":auth,
+                           "schema_article":"MISSING","schema_author":"MISSING",
+                           "og_image":"MISSING","author_link":"","toc":False,
+                           "faq":False,"related_posts":0,"breadcrumb":""}
+                try:
+                    await asyncio.wait_for(
+                        safe_goto(page, art_url, "domcontentloaded", 20000), timeout=22)
+                    js = (
+                        "(() => {"
+                        "const ss=Array.from(document.querySelectorAll('script[type=\"application/ld+json\"]'))"
+                        ".map(s=>{try{return JSON.parse(s.textContent)}catch(e){return null}}).filter(Boolean);"
+                        "let a=null;ss.forEach(s=>{"
+                        "if(['Article','NewsArticle','BlogPosting'].includes(s['@type']))a=s;"
+                        "if(s['@graph'])s['@graph'].forEach(g=>{"
+                        "if(['Article','NewsArticle','BlogPosting'].includes(g['@type']))a=g;});});"
+                        "return{"
+                        "schema_article:a?.['@type']||'MISSING',"
+                        "schema_author:a?.author?.name||'MISSING',"
+                        "schema_image:a?.image?'YES':'MISSING',"
+                        "og_image:document.querySelector(\"meta[property='og:image']\")?.content||'MISSING',"
+                        "author_link:document.querySelector(\"a[href*='/author/']\")?.href||'',"
+                        "toc:!!document.querySelector('[class*=toc],[id*=toc]'),"
+                        "faq:!!document.querySelector('[class*=faq],[id*=faq]'),"
+                        "related_posts:document.querySelectorAll('[class*=related] a').length,"
+                        "breadcrumb:(document.querySelector('[class*=breadcrumb]')?.innerText||'').trim().substring(0,200),"
+                        "}})()"
+                    )
+                    art_b = await asyncio.wait_for(page.evaluate(js), timeout=15)
+                    article.update(art_b)
+                except Exception as be:
+                    print(f"  WARN schema browser: {str(be)[:50]}")
+            else:
+                article = {"error":"no article found","word_count":0,"schema_article":"MISSING"}
         except Exception as e:
             print(f"  WARN M5: {str(e)[:80]}")
             article={"error":str(e),"word_count":0,"schema_article":"MISSING"}
-        print(f"  Words:{article.get('word_count',0)}  Schema:{article.get('schema_article')}")
     scores=score_all(tech,perf,crawl,article)
     issues=build_issues(tech,perf,crawl,article,shots)
     print(f"Score:{scores['overall']}/{scores['max']}  Issues:{len(issues)}")
@@ -458,16 +533,27 @@ async def audit(target, proxy_str="", push=False):
         print("Pushed!")
     return str(report)
 
+async def audit_safe(url, proxy, push, timeout=360):
+    try:
+        return await asyncio.wait_for(audit(url, proxy, push), timeout=timeout)
+    except asyncio.TimeoutError:
+        print(f"  TIMEOUT: {url} exceeded {timeout}s — saving partial data")
+        return None
+
 def main():
     parser=argparse.ArgumentParser(description="Unified website audit")
     parser.add_argument("url")
     parser.add_argument("--proxy",default="")
     parser.add_argument("--push",action="store_true")
+    parser.add_argument("--timeout",type=int,default=360)
     args=parser.parse_args()
-    asyncio.run(audit(args.url,args.proxy,args.push))
+    asyncio.run(audit_safe(args.url,args.proxy,args.push,args.timeout))
 
 if __name__=="__main__":
     main()
+
+
+
 
 
 
