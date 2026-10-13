@@ -2,14 +2,27 @@
   "site": "https://cryptodailyalert.com",
   "slug": "cryptodailyalert.com",
   "audit_date": "2026-10-13",
-  "overall_score": 57,
+  "overall_score": 55,
   "summary": {
-    "critical": 0,
+    "critical": 1,
     "high": 2,
     "medium": 4,
     "low": 1
   },
   "issues": [
+    {
+      "id": "CR-003",
+      "priority": "critical",
+      "category": "eeat",
+      "title": "Article schema missing",
+      "location": "https://cryptodailyalert.com/subscribe.html",
+      "element": "ld+json",
+      "what": "No NewsArticle JSON-LD",
+      "why": "No rich results, no Google News",
+      "fix": "Add NewsArticle LD+JSON: headline, author, dates, image, publisher",
+      "effort": "1day",
+      "evidence": null
+    },
     {
       "id": "CR-001",
       "priority": "high",
@@ -24,11 +37,11 @@
       "evidence": null
     },
     {
-      "id": "CR-003",
+      "id": "CR-004",
       "priority": "high",
       "category": "eeat",
       "title": "No author attribution",
-      "location": "",
+      "location": "https://cryptodailyalert.com/subscribe.html",
       "element": "byline",
       "what": "No visible author",
       "why": "E-E-A-T fail for YMYL crypto",
@@ -50,11 +63,11 @@
       "evidence": null
     },
     {
-      "id": "CR-004",
+      "id": "CR-005",
       "priority": "medium",
       "category": "ui_ux",
       "title": "No Table of Contents",
-      "location": "",
+      "location": "https://cryptodailyalert.com/subscribe.html",
       "element": "article",
       "what": "No TOC on multi-H2 article",
       "why": "Low dwell time, miss SERP sitelinks",
@@ -63,11 +76,11 @@
       "evidence": null
     },
     {
-      "id": "CR-005",
+      "id": "CR-006",
       "priority": "medium",
       "category": "geo",
       "title": "No FAQ section",
-      "location": "",
+      "location": "https://cryptodailyalert.com/subscribe.html",
       "element": "article",
       "what": "No FAQ or FAQPage schema",
       "why": "Miss PAA boxes in SERP",
@@ -76,24 +89,24 @@
       "evidence": null
     },
     {
-      "id": "CR-006",
+      "id": "CR-007",
       "priority": "medium",
       "category": "eeat",
-      "title": "Low word count (0)",
-      "location": "",
+      "title": "Low word count (111)",
+      "location": "https://cryptodailyalert.com/subscribe.html",
       "element": "body",
-      "what": "Only 0 words",
+      "what": "Only 111 words",
       "why": "Thin content",
       "fix": "Expand analysis articles to 1000-1500 words",
       "effort": "ongoing",
       "evidence": null
     },
     {
-      "id": "CR-007",
+      "id": "CR-008",
       "priority": "low",
       "category": "ui_ux",
       "title": "No related posts",
-      "location": "",
+      "location": "https://cryptodailyalert.com/subscribe.html",
       "element": "article bottom",
       "what": "No related articles",
       "why": "High bounce rate",

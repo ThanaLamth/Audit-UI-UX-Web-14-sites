@@ -2,7 +2,7 @@
   "site": "https://cryptodailyalert.com",
   "slug": "cryptodailyalert.com",
   "audit_date": "2026-10-13",
-  "overall": 57,
+  "overall": 55,
   "max": 100,
   "categories": {
     "technical_seo": {
@@ -21,7 +21,7 @@
       "grade": "B"
     },
     "eeat": {
-      "score": 4,
+      "score": 2,
       "max": 15,
       "grade": "D"
     },
