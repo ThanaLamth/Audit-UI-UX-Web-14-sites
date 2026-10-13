@@ -2,12 +2,12 @@
   "site": "https://theccpress.com",
   "slug": "theccpress.com",
   "audit_date": "2026-10-13",
-  "overall_score": 50,
+  "overall_score": 61,
   "summary": {
-    "critical": 2,
-    "high": 3,
-    "medium": 5,
-    "low": 1
+    "critical": 1,
+    "high": 2,
+    "medium": 4,
+    "low": 0
   },
   "issues": [
     {
@@ -22,19 +22,6 @@
       "fix": "Add meta property og:image 1200x630px to homepage head",
       "effort": "30min",
       "evidence": "01_home_top.png"
-    },
-    {
-      "id": "TH-006",
-      "priority": "critical",
-      "category": "eeat",
-      "title": "Article schema missing",
-      "location": "",
-      "element": "ld+json",
-      "what": "No NewsArticle JSON-LD",
-      "why": "No rich results, no Google News",
-      "fix": "Add NewsArticle LD+JSON: headline, author, dates, image, publisher",
-      "effort": "1day",
-      "evidence": null
     },
     {
       "id": "TH-002",
@@ -63,19 +50,6 @@
       "evidence": "04_news.png"
     },
     {
-      "id": "TH-007",
-      "priority": "high",
-      "category": "eeat",
-      "title": "No author attribution",
-      "location": "",
-      "element": "byline",
-      "what": "No visible author",
-      "why": "E-E-A-T fail for YMYL crypto",
-      "fix": "Add author byline: name, photo, link to /author/ bio",
-      "effort": "1day",
-      "evidence": null
-    },
-    {
       "id": "TH-003",
       "priority": "medium",
       "category": "security",
@@ -102,24 +76,11 @@
       "evidence": null
     },
     {
-      "id": "TH-008",
-      "priority": "medium",
-      "category": "ui_ux",
-      "title": "No Table of Contents",
-      "location": "",
-      "element": "article",
-      "what": "No TOC on multi-H2 article",
-      "why": "Low dwell time, miss SERP sitelinks",
-      "fix": "Auto-generate TOC from H2/H3 after intro",
-      "effort": "1day",
-      "evidence": null
-    },
-    {
-      "id": "TH-009",
+      "id": "TH-006",
       "priority": "medium",
       "category": "geo",
       "title": "No FAQ section",
-      "location": "",
+      "location": "https://theccpress.com/binance-news-today-doj-reviews-2023-settlement-breach",
       "element": "article",
       "what": "No FAQ or FAQPage schema",
       "why": "Miss PAA boxes in SERP",
@@ -128,29 +89,16 @@
       "evidence": null
     },
     {
-      "id": "TH-010",
+      "id": "TH-007",
       "priority": "medium",
       "category": "eeat",
       "title": "Low word count (0)",
-      "location": "",
+      "location": "https://theccpress.com/binance-news-today-doj-reviews-2023-settlement-breach",
       "element": "body",
       "what": "Only 0 words",
       "why": "Thin content",
       "fix": "Expand analysis articles to 1000-1500 words",
       "effort": "ongoing",
-      "evidence": null
-    },
-    {
-      "id": "TH-011",
-      "priority": "low",
-      "category": "ui_ux",
-      "title": "No related posts",
-      "location": "",
-      "element": "article bottom",
-      "what": "No related articles",
-      "why": "High bounce rate",
-      "fix": "Add 3-4 related cards at bottom",
-      "effort": "1day",
       "evidence": null
     }
   ]
