@@ -158,51 +158,120 @@ async def m4_crawl(page, target):
     return D
 
 
-def fetch_article_url(target, sitemap_url=""):
-    import subprocess, json as _j
-    env = os.environ.copy()
-    if sitemap_url:
+def _make_opener(proxy_str=""):
+    import urllib.request
+    if not proxy_str:
+        return urllib.request.build_opener()
+    parts = proxy_str.split(":")
+    if len(parts) == 4:
+        host, port, user, pwd = parts
+        proxy_url = f"http://{user}:{pwd}@{host}:{port}"
+    elif len(parts) == 2:
+        proxy_url = f"http://{parts[0]}:{parts[1]}"
+    else:
+        proxy_url = f"http://{proxy_str}"
+    proxy_handler = urllib.request.ProxyHandler({"http": proxy_url, "https": proxy_url})
+    return urllib.request.build_opener(proxy_handler)
+
+def _fetch_url_text(url, opener, timeout=12):
+    import urllib.request
+    req = urllib.request.Request(url, headers={"User-Agent":"Mozilla/5.0 (compatible; AuditBot/1.0)"})
+    with opener.open(req, timeout=timeout) as resp:
+        return resp.read().decode("utf-8", "ignore")
+
+def fetch_article_url(target, sitemap_url="", proxy_str=""):
+    import subprocess, json as _j, re as _re, urllib.request
+    env = __import__("os").environ.copy()
+    hostname = target.rstrip("/")
+    opener = _make_opener(proxy_str)
+
+    def try_sitemap(sm_url, depth=0):
         try:
-            r = subprocess.run("tinyfish fetch content get --format json " + sitemap_url,
-                capture_output=True, text=True, env=env, shell=True, timeout=15)
-            d = _j.loads(r.stdout).get('results',[])
-            locs = re.findall(r"<loc>(.*?)</loc>", d[0].get("text","") if d else "")
+            sm_text = _fetch_url_text(sm_url, opener, timeout=12)
+            locs = _re.findall(r"<loc>(.*?)</loc>", sm_text)
+            # Check if this is a sitemap index
+            if not locs:
+                return ""
+            # Look for sub-sitemaps that contain articles
+            # Note: check PATH only (after 3rd slash) to avoid matching domain names
+            skip_pat = _re.compile(
+                r"\.xml$|/category|/tag|/author|/people|/page/|/categories|"
+                r"merchant|government|reserve|spend|map$|country|corrections|"
+                r"editorial|privacy|terms|contact|masthead|disclaimer|about|team|"
+                r"stories$|conflicts$|power$|investigations$|/cmc/|newsroom|transparency|report$")
             for loc in locs:
-                if "news" in loc.lower() or "post" in loc.lower():
-                    r2 = subprocess.run("tinyfish fetch content get --format json " + loc,
-                        capture_output=True, text=True, env=env, shell=True, timeout=15)
-                    d2 = _j.loads(r2.stdout).get('results',[])
-                    clocs = re.findall(r"<loc>(.*?)</loc>", d2[0].get("text","") if d2 else "")
-                    arts = [u for u in clocs if u.count("/")>=3 and not re.search(r"tool|category|tag|author|page",u)]
-                    if arts: return arts[0]
+                loc = loc.strip()
+                path_part = "/" + "/".join(loc.split("/")[3:])
+                if "news" in path_part.lower() or "post" in path_part.lower() or "article" in path_part.lower():
+                    if depth == 0 and ".xml" in loc:
+                        result = try_sitemap(loc, depth+1)
+                        if result:
+                            return result
+                    elif (loc.count("/") >= 3
+                          and not _re.search(r"category|tag|author|page[/\d]", loc)
+                          and not skip_pat.search(loc)
+                          and len(loc.split("/")[-1].split("-")) >= 3):
+                        return loc
+            # Also check direct article URLs (skip utility/navigation pages)
+            skip_pat = _re.compile(
+                r"\.xml|/category|/tag|/author|/people|/page/|/categories|"
+                r"merchant|government|reserve|spend|map$|country|corrections|"
+                r"editorial|privacy|terms|contact|masthead|disclaimer|about|team|"
+                r"stories$|conflicts$|power$|investigations$|/cmc/|newsroom|transparency|report$")
+            arts = [u.strip() for u in locs
+                    if u.strip().count("/") >= 3
+                    and not skip_pat.search(u.strip())
+                    and len(u.strip().split("/")[-1].split("-")) >= 3]
+            if arts:
+                return arts[0]
         except Exception as e:
-            print(f"  WARN sitemap fetch: {e}")
-    try:
-        r = subprocess.run("tinyfish fetch content get --format json --links " + target,
-            capture_output=True, text=True, env=env, shell=True, timeout=20)
-        d = _j.loads(r.stdout).get('results',[])
-        links = d[0].get("links",[]) if d else []
-        for lk in links:
-            url = lk.get("url","")
-            if (url.startswith(target) and url != target and
-                url.count("/")>=3 and not re.search(r"tool|category|tag|author|#",url)):
-                return url
-    except Exception as e:
-        print(f"  WARN homepage fetch: {e}")
+            print(f"  WARN sitemap {sm_url}: {e}")
+        return ""
+
+    # Try sitemap via proxy-aware HTTP
+    if sitemap_url:
+        result = try_sitemap(sitemap_url)
+        if result:
+            return result
+    # Also try common sitemap variants
+    for sm_path in ["/sitemap.xml", "/sitemap_news.xml", "/news-sitemap.xml", "/post-sitemap.xml"]:
+        result = try_sitemap(hostname + sm_path)
+        if result:
+            return result
+
+    # Fallback: fetch /bitcoin-news/ or /news/ or similar category pages
+    for path in ["/bitcoin-news/", "/crypto-news/", "/news/", "/blog/", "/articles/"]:
+        try:
+            cat_text = _fetch_url_text(hostname + path, opener, timeout=10)
+            link_pat = r'href=["\x27](' + _re.escape(hostname) + r'/[^"\x27>\s]+)["\x27]'
+            links = _re.findall(link_pat, cat_text)
+            for link in links:
+                link = link.rstrip("/")
+                if (link.count("/") >= 3 and
+                        not _re.search(r"category|tag|author|#|/page/|about|contact|privacy|editorial", link)):
+                    return link
+        except Exception:
+            pass
+
     return ""
 
 def fetch_article_words(article_url):
     import subprocess, json as _j
-    env = os.environ.copy()
+    env = __import__("os").environ.copy()
     try:
         r = subprocess.run("tinyfish fetch content get --format json " + article_url,
             capture_output=True, text=True, env=env, shell=True, timeout=20)
-        d = _j.loads(r.stdout).get('results',[])
-        if not d: return 0, ""
-        text = d[0].get("text","")
-        return len(text.split()), d[0].get("author","") or ""
-    except:
+        parsed = _j.loads(r.stdout)
+        results = parsed.get("results", []) if isinstance(parsed, dict) else parsed
+        if not results: return 0, ""
+        d = results[0] if isinstance(results[0], dict) else {}
+        text = d.get("text","")
+        text = text if isinstance(text, str) else ""
+        return len(text.split()), d.get("author","") or ""
+    except Exception as e:
+        print(f"  WARN words fetch: {e}")
         return 0, ""
+
 
 async def m5_article(page, target, sitemap_url=""):
     article_url = ""
@@ -472,7 +541,7 @@ async def audit(target, proxy_str="", push=False):
         print("[M5] Article audit (fetch+browser)...")
         try:
             loop = asyncio.get_event_loop()
-            art_url = await loop.run_in_executor(None, fetch_article_url, target, crawl.get("sitemap_url",""))
+            art_url = await loop.run_in_executor(None, fetch_article_url, target, crawl.get("sitemap_url",""), proxy_str)
             print(f"  Article: {(art_url or 'NOT FOUND')[:80]}")
             if art_url:
                 wc, auth = await loop.run_in_executor(None, fetch_article_words, art_url)
@@ -508,7 +577,64 @@ async def audit(target, proxy_str="", push=False):
                 except Exception as be:
                     print(f"  WARN schema browser: {str(be)[:50]}")
             else:
-                article = {"error":"no article found","word_count":0,"schema_article":"MISSING"}
+                # Playwright fallback for JS-rendered sites
+                pw_art_url = ""
+                try:
+                    # Navigate to target homepage and find article links
+                    await asyncio.wait_for(safe_goto(page, target, "networkidle", 15000), timeout=17)
+                    await asyncio.sleep(1)
+                    pw_art_url = await page.evaluate(
+                        "() => {"
+                        "  const host = location.hostname;"
+                        "  const links = Array.from(document.querySelectorAll('a[href]'))"
+                        "    .map(a => a.href)"
+                        "    .filter(h => h.includes(host)"
+                        "      && h.split('/').filter(Boolean).length >= 3"
+                        "      && !h.includes('#')"
+                        "      && !/category|tag|author|people|page=|about|contact|privacy|editorial|merchant|map/.test(h));"
+                        "  return links[0] || '';"
+                        "}"
+                    )
+                except Exception as pw_e:
+                    print(f"  WARN M5 Playwright fallback: {str(pw_e)[:60]}")
+                if pw_art_url:
+                    print(f"  Article (PW fallback): {pw_art_url[:80]}")
+                    wc2, auth2 = await loop.run_in_executor(None, fetch_article_words, pw_art_url)
+                    article = {"url": pw_art_url, "word_count": wc2, "author_visible": auth2,
+                               "schema_article": "MISSING", "schema_author": "MISSING",
+                               "og_image": "MISSING", "author_link": "", "toc": False,
+                               "faq": False, "related_posts": 0, "breadcrumb": ""}
+                    try:
+                        await asyncio.wait_for(
+                            safe_goto(page, pw_art_url, "domcontentloaded", 20000), timeout=22)
+                        js2 = """(() => {
+const ss=Array.from(document.querySelectorAll('script[type="application/ld+json"]'))
+  .map(s=>{try{return JSON.parse(s.textContent)}catch(e){return null}}).filter(Boolean);
+let a=null;
+ss.forEach(s=>{
+  if(['Article','NewsArticle','BlogPosting'].includes(s['@type']))a=s;
+  if(s['@graph'])s['@graph'].forEach(g=>{
+    if(['Article','NewsArticle','BlogPosting'].includes(g['@type']))a=g;
+  });
+});
+return{
+  schema_article:a?.['@type']||'MISSING',
+  schema_author:a?.author?.name||'MISSING',
+  schema_image:a?.image?'YES':'MISSING',
+  og_image:document.querySelector("meta[property='og:image']")?.content||'MISSING',
+  author_link:document.querySelector("a[href*='/author/']")?.href||'',
+  toc:!!document.querySelector('[class*=toc],[id*=toc]'),
+  faq:!!document.querySelector('[class*=faq],[id*=faq]'),
+  related_posts:document.querySelectorAll('[class*=related] a').length,
+  breadcrumb:(document.querySelector('[class*=breadcrumb]')?.innerText||'').trim().substring(0,200),
+};
+})()"""
+                        extra = await page.evaluate(js2)
+                        article.update(extra)
+                    except Exception:
+                        pass
+                else:
+                    article = {"error": "no article found", "word_count": 0, "schema_article": "MISSING"}
         except Exception as e:
             print(f"  WARN M5: {str(e)[:80]}")
             article={"error":str(e),"word_count":0,"schema_article":"MISSING"}
