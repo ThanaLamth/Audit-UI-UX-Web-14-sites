@@ -2,10 +2,10 @@
   "site": "https://nftenex.com",
   "slug": "nftenex.com",
   "audit_date": "2026-10-13",
-  "overall_score": 54,
+  "overall_score": 65,
   "summary": {
     "critical": 1,
-    "high": 3,
+    "high": 2,
     "medium": 4,
     "low": 1
   },
@@ -50,19 +50,6 @@
       "evidence": "04_news.png"
     },
     {
-      "id": "NF-005",
-      "priority": "high",
-      "category": "eeat",
-      "title": "No author attribution",
-      "location": "",
-      "element": "byline",
-      "what": "No visible author",
-      "why": "E-E-A-T fail for YMYL crypto",
-      "fix": "Add author byline: name, photo, link to /author/ bio",
-      "effort": "1day",
-      "evidence": null
-    },
-    {
       "id": "NF-003",
       "priority": "medium",
       "category": "security",
@@ -76,11 +63,11 @@
       "evidence": null
     },
     {
-      "id": "NF-006",
+      "id": "NF-005",
       "priority": "medium",
       "category": "ui_ux",
       "title": "No Table of Contents",
-      "location": "",
+      "location": "https://nftenex.com/ethereum-selling-pressure-eth-below-50-day-sma-etf",
       "element": "article",
       "what": "No TOC on multi-H2 article",
       "why": "Low dwell time, miss SERP sitelinks",
@@ -89,11 +76,11 @@
       "evidence": null
     },
     {
-      "id": "NF-007",
+      "id": "NF-006",
       "priority": "medium",
       "category": "geo",
       "title": "No FAQ section",
-      "location": "",
+      "location": "https://nftenex.com/ethereum-selling-pressure-eth-below-50-day-sma-etf",
       "element": "article",
       "what": "No FAQ or FAQPage schema",
       "why": "Miss PAA boxes in SERP",
@@ -102,24 +89,24 @@
       "evidence": null
     },
     {
-      "id": "NF-008",
+      "id": "NF-007",
       "priority": "medium",
       "category": "eeat",
-      "title": "Low word count (0)",
-      "location": "",
+      "title": "Low word count (760)",
+      "location": "https://nftenex.com/ethereum-selling-pressure-eth-below-50-day-sma-etf",
       "element": "body",
-      "what": "Only 0 words",
+      "what": "Only 760 words",
       "why": "Thin content",
       "fix": "Expand analysis articles to 1000-1500 words",
       "effort": "ongoing",
       "evidence": null
     },
     {
-      "id": "NF-009",
+      "id": "NF-008",
       "priority": "low",
       "category": "ui_ux",
       "title": "No related posts",
-      "location": "",
+      "location": "https://nftenex.com/ethereum-selling-pressure-eth-below-50-day-sma-etf",
       "element": "article bottom",
       "what": "No related articles",
       "why": "High bounce rate",
