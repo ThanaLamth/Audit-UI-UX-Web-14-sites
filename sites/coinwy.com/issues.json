@@ -1,0 +1,118 @@
+{
+  "site": "https://coinwy.com",
+  "slug": "coinwy.com",
+  "audit_date": "2026-10-13",
+  "overall_score": 59,
+  "summary": {
+    "critical": 0,
+    "high": 3,
+    "medium": 4,
+    "low": 1
+  },
+  "issues": [
+    {
+      "id": "CO-001",
+      "priority": "high",
+      "category": "security",
+      "title": "HSTS header missing",
+      "location": "https://coinwy.com",
+      "element": "HTTP Headers",
+      "what": "HSTS not set",
+      "why": "SSL stripping vulnerability",
+      "fix": "Cloudflare SSL/TLS Edge Certs: Enable HSTS max-age=31536000",
+      "effort": "5min",
+      "evidence": null
+    },
+    {
+      "id": "CO-003",
+      "priority": "high",
+      "category": "ui_ux",
+      "title": "No search bar",
+      "location": "https://coinwy.com",
+      "element": "Navigation",
+      "what": "No search input",
+      "why": "High bounce rate",
+      "fix": "Add search to header nav",
+      "effort": "1day",
+      "evidence": "04_news.png"
+    },
+    {
+      "id": "CO-004",
+      "priority": "high",
+      "category": "eeat",
+      "title": "No author attribution",
+      "location": "",
+      "element": "byline",
+      "what": "No visible author",
+      "why": "E-E-A-T fail for YMYL crypto",
+      "fix": "Add author byline: name, photo, link to /author/ bio",
+      "effort": "1day",
+      "evidence": null
+    },
+    {
+      "id": "CO-002",
+      "priority": "medium",
+      "category": "security",
+      "title": "CSP header missing",
+      "location": "https://coinwy.com",
+      "element": "HTTP Headers",
+      "what": "CSP not present",
+      "why": "XSS vulnerability",
+      "fix": "Add Content-Security-Policy via Cloudflare Transform Rules",
+      "effort": "2h",
+      "evidence": null
+    },
+    {
+      "id": "CO-005",
+      "priority": "medium",
+      "category": "ui_ux",
+      "title": "No Table of Contents",
+      "location": "",
+      "element": "article",
+      "what": "No TOC on multi-H2 article",
+      "why": "Low dwell time, miss SERP sitelinks",
+      "fix": "Auto-generate TOC from H2/H3 after intro",
+      "effort": "1day",
+      "evidence": null
+    },
+    {
+      "id": "CO-006",
+      "priority": "medium",
+      "category": "geo",
+      "title": "No FAQ section",
+      "location": "",
+      "element": "article",
+      "what": "No FAQ or FAQPage schema",
+      "why": "Miss PAA boxes in SERP",
+      "fix": "Add 3-5 QA + FAQPage JSON-LD at end of analysis articles",
+      "effort": "2h per template",
+      "evidence": null
+    },
+    {
+      "id": "CO-007",
+      "priority": "medium",
+      "category": "eeat",
+      "title": "Low word count (0)",
+      "location": "",
+      "element": "body",
+      "what": "Only 0 words",
+      "why": "Thin content",
+      "fix": "Expand analysis articles to 1000-1500 words",
+      "effort": "ongoing",
+      "evidence": null
+    },
+    {
+      "id": "CO-008",
+      "priority": "low",
+      "category": "ui_ux",
+      "title": "No related posts",
+      "location": "",
+      "element": "article bottom",
+      "what": "No related articles",
+      "why": "High bounce rate",
+      "fix": "Add 3-4 related cards at bottom",
+      "effort": "1day",
+      "evidence": null
+    }
+  ]
+}
