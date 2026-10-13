@@ -2,7 +2,7 @@
   "site": "https://theccpress.com",
   "slug": "theccpress.com",
   "audit_date": "2026-10-13",
-  "overall": 50,
+  "overall": 52,
   "max": 100,
   "categories": {
     "technical_seo": {
@@ -21,7 +21,7 @@
       "grade": "C"
     },
     "eeat": {
-      "score": 2,
+      "score": 4,
       "max": 15,
       "grade": "D"
     },
