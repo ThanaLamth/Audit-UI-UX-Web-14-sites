@@ -2,10 +2,10 @@
   "site": "https://theccpress.com",
   "slug": "theccpress.com",
   "audit_date": "2026-10-13",
-  "overall_score": 52,
+  "overall_score": 50,
   "summary": {
     "critical": 2,
-    "high": 2,
+    "high": 3,
     "medium": 5,
     "low": 1
   },
@@ -28,7 +28,7 @@
       "priority": "critical",
       "category": "eeat",
       "title": "Article schema missing",
-      "location": "https://theccpress.com/stories",
+      "location": "",
       "element": "ld+json",
       "what": "No NewsArticle JSON-LD",
       "why": "No rich results, no Google News",
@@ -63,6 +63,19 @@
       "evidence": "04_news.png"
     },
     {
+      "id": "TH-007",
+      "priority": "high",
+      "category": "eeat",
+      "title": "No author attribution",
+      "location": "",
+      "element": "byline",
+      "what": "No visible author",
+      "why": "E-E-A-T fail for YMYL crypto",
+      "fix": "Add author byline: name, photo, link to /author/ bio",
+      "effort": "1day",
+      "evidence": null
+    },
+    {
       "id": "TH-003",
       "priority": "medium",
       "category": "security",
@@ -89,11 +102,11 @@
       "evidence": null
     },
     {
-      "id": "TH-007",
+      "id": "TH-008",
       "priority": "medium",
       "category": "ui_ux",
       "title": "No Table of Contents",
-      "location": "https://theccpress.com/stories",
+      "location": "",
       "element": "article",
       "what": "No TOC on multi-H2 article",
       "why": "Low dwell time, miss SERP sitelinks",
@@ -102,11 +115,11 @@
       "evidence": null
     },
     {
-      "id": "TH-008",
+      "id": "TH-009",
       "priority": "medium",
       "category": "geo",
       "title": "No FAQ section",
-      "location": "https://theccpress.com/stories",
+      "location": "",
       "element": "article",
       "what": "No FAQ or FAQPage schema",
       "why": "Miss PAA boxes in SERP",
@@ -115,24 +128,24 @@
       "evidence": null
     },
     {
-      "id": "TH-009",
+      "id": "TH-010",
       "priority": "medium",
       "category": "eeat",
-      "title": "Low word count (59)",
-      "location": "https://theccpress.com/stories",
+      "title": "Low word count (0)",
+      "location": "",
       "element": "body",
-      "what": "Only 59 words",
+      "what": "Only 0 words",
       "why": "Thin content",
       "fix": "Expand analysis articles to 1000-1500 words",
       "effort": "ongoing",
       "evidence": null
     },
     {
-      "id": "TH-010",
+      "id": "TH-011",
       "priority": "low",
       "category": "ui_ux",
       "title": "No related posts",
-      "location": "https://theccpress.com/stories",
+      "location": "",
       "element": "article bottom",
       "what": "No related articles",
       "why": "High bounce rate",
