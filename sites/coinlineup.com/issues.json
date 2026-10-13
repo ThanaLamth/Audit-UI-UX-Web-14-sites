@@ -1,0 +1,105 @@
+{
+  "site": "https://coinlineup.com",
+  "slug": "coinlineup.com",
+  "audit_date": "2026-10-13",
+  "overall_score": 63,
+  "summary": {
+    "critical": 1,
+    "high": 2,
+    "medium": 3,
+    "low": 1
+  },
+  "issues": [
+    {
+      "id": "CO-004",
+      "priority": "critical",
+      "category": "eeat",
+      "title": "Article schema missing",
+      "location": "https://coinlineup.com/markets/bitcoin",
+      "element": "ld+json",
+      "what": "No NewsArticle JSON-LD",
+      "why": "No rich results, no Google News",
+      "fix": "Add NewsArticle LD+JSON: headline, author, dates, image, publisher",
+      "effort": "1day",
+      "evidence": null
+    },
+    {
+      "id": "CO-001",
+      "priority": "high",
+      "category": "security",
+      "title": "HSTS header missing",
+      "location": "https://coinlineup.com",
+      "element": "HTTP Headers",
+      "what": "HSTS not set",
+      "why": "SSL stripping vulnerability",
+      "fix": "Cloudflare SSL/TLS Edge Certs: Enable HSTS max-age=31536000",
+      "effort": "5min",
+      "evidence": null
+    },
+    {
+      "id": "CO-005",
+      "priority": "high",
+      "category": "eeat",
+      "title": "No author attribution",
+      "location": "https://coinlineup.com/markets/bitcoin",
+      "element": "byline",
+      "what": "No visible author",
+      "why": "E-E-A-T fail for YMYL crypto",
+      "fix": "Add author byline: name, photo, link to /author/ bio",
+      "effort": "1day",
+      "evidence": null
+    },
+    {
+      "id": "CO-002",
+      "priority": "medium",
+      "category": "security",
+      "title": "CSP header missing",
+      "location": "https://coinlineup.com",
+      "element": "HTTP Headers",
+      "what": "CSP not present",
+      "why": "XSS vulnerability",
+      "fix": "Add Content-Security-Policy via Cloudflare Transform Rules",
+      "effort": "2h",
+      "evidence": null
+    },
+    {
+      "id": "CO-003",
+      "priority": "medium",
+      "category": "technical_seo",
+      "title": "Images missing alt (38)",
+      "location": "https://coinlineup.com",
+      "element": "img",
+      "what": "38 imgs no alt",
+      "why": "WCAG + Google image indexing",
+      "fix": "Add alt text to all images",
+      "effort": "2h",
+      "evidence": null
+    },
+    {
+      "id": "CO-006",
+      "priority": "medium",
+      "category": "ui_ux",
+      "title": "No Table of Contents",
+      "location": "https://coinlineup.com/markets/bitcoin",
+      "element": "article",
+      "what": "No TOC on multi-H2 article",
+      "why": "Low dwell time, miss SERP sitelinks",
+      "fix": "Auto-generate TOC from H2/H3 after intro",
+      "effort": "1day",
+      "evidence": null
+    },
+    {
+      "id": "CO-007",
+      "priority": "low",
+      "category": "ui_ux",
+      "title": "No related posts",
+      "location": "https://coinlineup.com/markets/bitcoin",
+      "element": "article bottom",
+      "what": "No related articles",
+      "why": "High bounce rate",
+      "fix": "Add 3-4 related cards at bottom",
+      "effort": "1day",
+      "evidence": null
+    }
+  ]
+}
