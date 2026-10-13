@@ -1,0 +1,92 @@
+{
+  "site": "https://tokentopnews.com",
+  "slug": "tokentopnews.com",
+  "audit_date": "2026-10-13",
+  "overall_score": 69,
+  "summary": {
+    "critical": 0,
+    "high": 2,
+    "medium": 3,
+    "low": 1
+  },
+  "issues": [
+    {
+      "id": "TO-001",
+      "priority": "high",
+      "category": "security",
+      "title": "HSTS header missing",
+      "location": "https://tokentopnews.com",
+      "element": "HTTP Headers",
+      "what": "HSTS not set",
+      "why": "SSL stripping vulnerability",
+      "fix": "Cloudflare SSL/TLS Edge Certs: Enable HSTS max-age=31536000",
+      "effort": "5min",
+      "evidence": null
+    },
+    {
+      "id": "TO-003",
+      "priority": "high",
+      "category": "eeat",
+      "title": "No author attribution",
+      "location": "https://tokentopnews.com/article/us-near-spot-etf-inflow-sol-zec-outflow/",
+      "element": "byline",
+      "what": "No visible author",
+      "why": "E-E-A-T fail for YMYL crypto",
+      "fix": "Add author byline: name, photo, link to /author/ bio",
+      "effort": "1day",
+      "evidence": null
+    },
+    {
+      "id": "TO-002",
+      "priority": "medium",
+      "category": "security",
+      "title": "CSP header missing",
+      "location": "https://tokentopnews.com",
+      "element": "HTTP Headers",
+      "what": "CSP not present",
+      "why": "XSS vulnerability",
+      "fix": "Add Content-Security-Policy via Cloudflare Transform Rules",
+      "effort": "2h",
+      "evidence": null
+    },
+    {
+      "id": "TO-004",
+      "priority": "medium",
+      "category": "geo",
+      "title": "No FAQ section",
+      "location": "https://tokentopnews.com/article/us-near-spot-etf-inflow-sol-zec-outflow/",
+      "element": "article",
+      "what": "No FAQ or FAQPage schema",
+      "why": "Miss PAA boxes in SERP",
+      "fix": "Add 3-5 QA + FAQPage JSON-LD at end of analysis articles",
+      "effort": "2h per template",
+      "evidence": null
+    },
+    {
+      "id": "TO-005",
+      "priority": "medium",
+      "category": "eeat",
+      "title": "Low word count (309)",
+      "location": "https://tokentopnews.com/article/us-near-spot-etf-inflow-sol-zec-outflow/",
+      "element": "body",
+      "what": "Only 309 words",
+      "why": "Thin content",
+      "fix": "Expand analysis articles to 1000-1500 words",
+      "effort": "ongoing",
+      "evidence": null
+    },
+    {
+      "id": "TO-006",
+      "priority": "low",
+      "category": "ui_ux",
+      "title": "No related posts",
+      "location": "https://tokentopnews.com/article/us-near-spot-etf-inflow-sol-zec-outflow/",
+      "element": "article bottom",
+      "what": "No related articles",
+      "why": "High bounce rate",
+      "fix": "Add 3-4 related cards at bottom",
+      "effort": "1day",
+      "evidence": null
+    }
+  ]
+}
