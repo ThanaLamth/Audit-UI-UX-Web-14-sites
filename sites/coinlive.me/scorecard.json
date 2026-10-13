@@ -2,7 +2,7 @@
   "site": "https://coinlive.me",
   "slug": "coinlive.me",
   "audit_date": "2026-10-13",
-  "overall": 51,
+  "overall": 50,
   "max": 100,
   "categories": {
     "technical_seo": {
@@ -21,7 +21,7 @@
       "grade": "C"
     },
     "eeat": {
-      "score": 4,
+      "score": 3,
       "max": 15,
       "grade": "D"
     },

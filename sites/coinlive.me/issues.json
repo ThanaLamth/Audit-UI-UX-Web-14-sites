@@ -2,9 +2,9 @@
   "site": "https://coinlive.me",
   "slug": "coinlive.me",
   "audit_date": "2026-10-13",
-  "overall_score": 51,
+  "overall_score": 50,
   "summary": {
-    "critical": 1,
+    "critical": 2,
     "high": 3,
     "medium": 5,
     "low": 1
@@ -22,6 +22,19 @@
       "fix": "Add meta property og:image 1200x630px to homepage head",
       "effort": "30min",
       "evidence": "01_home_top.png"
+    },
+    {
+      "id": "CO-006",
+      "priority": "critical",
+      "category": "eeat",
+      "title": "Article schema missing",
+      "location": "https://coinlive.me/crypto-news/",
+      "element": "ld+json",
+      "what": "No NewsArticle JSON-LD",
+      "why": "No rich results, no Google News",
+      "fix": "Add NewsArticle LD+JSON: headline, author, dates, image, publisher",
+      "effort": "1day",
+      "evidence": null
     },
     {
       "id": "CO-002",
@@ -50,11 +63,11 @@
       "evidence": "04_news.png"
     },
     {
-      "id": "CO-006",
+      "id": "CO-007",
       "priority": "high",
       "category": "eeat",
       "title": "No author attribution",
-      "location": "",
+      "location": "https://coinlive.me/crypto-news/",
       "element": "byline",
       "what": "No visible author",
       "why": "E-E-A-T fail for YMYL crypto",
@@ -89,11 +102,11 @@
       "evidence": null
     },
     {
-      "id": "CO-007",
+      "id": "CO-008",
       "priority": "medium",
       "category": "ui_ux",
       "title": "No Table of Contents",
-      "location": "",
+      "location": "https://coinlive.me/crypto-news/",
       "element": "article",
       "what": "No TOC on multi-H2 article",
       "why": "Low dwell time, miss SERP sitelinks",
@@ -102,11 +115,11 @@
       "evidence": null
     },
     {
-      "id": "CO-008",
+      "id": "CO-009",
       "priority": "medium",
       "category": "geo",
       "title": "No FAQ section",
-      "location": "",
+      "location": "https://coinlive.me/crypto-news/",
       "element": "article",
       "what": "No FAQ or FAQPage schema",
       "why": "Miss PAA boxes in SERP",
@@ -115,24 +128,24 @@
       "evidence": null
     },
     {
-      "id": "CO-009",
+      "id": "CO-010",
       "priority": "medium",
       "category": "eeat",
-      "title": "Low word count (0)",
-      "location": "",
+      "title": "Low word count (42)",
+      "location": "https://coinlive.me/crypto-news/",
       "element": "body",
-      "what": "Only 0 words",
+      "what": "Only 42 words",
       "why": "Thin content",
       "fix": "Expand analysis articles to 1000-1500 words",
       "effort": "ongoing",
       "evidence": null
     },
     {
-      "id": "CO-010",
+      "id": "CO-011",
       "priority": "low",
       "category": "ui_ux",
       "title": "No related posts",
-      "location": "",
+      "location": "https://coinlive.me/crypto-news/",
       "element": "article bottom",
       "what": "No related articles",
       "why": "High bounce rate",
