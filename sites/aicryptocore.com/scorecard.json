@@ -2,7 +2,7 @@
   "site": "https://aicryptocore.com",
   "slug": "aicryptocore.com",
   "audit_date": "2026-10-13",
-  "overall": 55,
+  "overall": 59,
   "max": 100,
   "categories": {
     "technical_seo": {
@@ -21,9 +21,9 @@
       "grade": "C"
     },
     "eeat": {
-      "score": 4,
+      "score": 8,
       "max": 15,
-      "grade": "D"
+      "grade": "C+"
     },
     "security": {
       "score": 3,
