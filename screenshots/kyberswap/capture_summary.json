@@ -1,0 +1,8 @@
+{
+  "url": "https://kyberswap.com",
+  "screenshots": {
+    "desktop": "screenshots\\kyberswap\\desktop.png",
+    "tablet": "screenshots\\kyberswap\\tablet.png",
+    "phone": "screenshots\\kyberswap\\phone.png"
+  }
+}
