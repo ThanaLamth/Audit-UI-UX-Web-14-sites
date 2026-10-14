@@ -206,8 +206,15 @@ KyberSwap opens with the **token pair pre-filled** by the link creator. In the e
 ### Step 2 — Connect Wallet and Review
 
 1. Click **"Connect"** and choose your wallet
-2. Check the swap details: Rate, Minimum Received, Price Impact
-3. The swap rate is **identical** to what you'd get by going to kyberswap.com directly — the referral link does not change routing or pricing
+2. Check Terms of Use checkbox (required before wallets activate)
+3. Click **MetaMask** → approve in the MetaMask popup
+4. KyberSwap now shows your wallet address and ETH balance in the top-right
+
+**KyberSwap with MetaMask connected via referral link:**
+![KyberSwap wallet connected](screenshots/kyberswap/wallet-flow/10_kyberswap_connected.png)
+*Wallet `0x5363...A0cD` connected. The swap interface shows ETH → USDC pre-filled from the tip link. Rate and route display automatically — no extra setup needed.*
+
+5. The swap rate is **identical** to going to kyberswap.com directly — the referral link never changes pricing
 
 ### Step 3 — Tip at Confirmation (Optional)
 
