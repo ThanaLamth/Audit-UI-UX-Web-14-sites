@@ -128,42 +128,83 @@ KyberSwap covers 19 chains including:
 
 ## How to Use KyberSwap: Step-by-Step Tutorial
 
-### Step 1 — Connect Your Wallet
+### Step 1 — Open KyberSwap and Connect Your Wallet
 
-1. Go to [kyberswap.com](https://kyberswap.com)
-2. Click the green **"Connect"** button in the top-right corner
-3. Choose your wallet — MetaMask, WalletConnect, Coinbase Wallet, Rabby, and 20+ others are supported
-4. Approve the connection in your wallet popup
+Go to [kyberswap.com](https://kyberswap.com). You'll see a screen like this:
 
-> **No registration required.** KyberSwap is non-custodial — your wallet address is your identity.
+![KyberSwap homepage with Connect button](screenshots/kyberswap/tutorial/step1_homepage_connect_btn.png)
+*The swap box is on the left. The green **"Connect"** button is in the top-right corner. The price chart on the right shows live ETH/USDT price — you can see rates even before connecting.*
 
-### Step 2 — Select Your Network
+> **What is a wallet?** Think of it like a digital keychain. It holds your crypto coins and lets you approve transactions. You never type in a password on KyberSwap — your wallet handles security. Popular options: **MetaMask** (most common), Coinbase Wallet, Rabby. No email or account needed.
 
-1. After connecting, the chain selector appears next to the Connect button (defaults to Ethereum)
-2. Click it and select your target chain — Arbitrum and Base are popular for low gas fees
-3. Your wallet will prompt you to switch networks if needed; confirm it
+**To connect:**
+1. Click the green **"Connect"** button top-right
+2. Tick the Terms of Use checkbox in the popup
+3. Click your wallet name (e.g., MetaMask)
+4. A popup from your wallet asks "Connect to KyberSwap?" — click **Connect**
 
-### Step 3 — Perform a Swap
+Your wallet address (e.g., `0x5363...A0cD`) now appears in the top bar, replacing the Connect button. You're in.
 
-1. In the **Swap** tab, click the top token field and type the token you want to sell (e.g., ETH)
-2. Click the bottom token field and select what you want to receive (e.g., USDC)
-3. Enter the amount in the top field
-4. Review the quote:
-   - **Rate:** current exchange rate
-   - **Minimum Received:** guaranteed minimum after slippage
-   - **Price Impact:** effect of your trade on the pool price — ideally below 1%
-5. Click **"Swap"** and confirm the transaction in your wallet
+---
 
-> **Slippage setting:** The default is 0.5%. For stablecoin pairs, 0.1% works fine. For volatile or low-liquidity tokens, set 1–2%.
+### Step 2 — Choose Your Blockchain Network
 
-### Step 4 — Set a Limit Order (Optional)
+KyberSwap works on many different blockchains. Click the **"Ethereum"** button at the top to switch:
 
-1. Click the **"Limit Order"** tab next to Swap
-2. Select the token pair
-3. Set your target price
-4. Enter the amount
-5. Sign the gasless order in your wallet
-6. The order appears in your active orders list and fills automatically when the price is hit
+![KyberSwap network selector dropdown](screenshots/kyberswap/tutorial/step2_network_dropdown.png)
+*The chain selector shows all supported networks split into Layer-1 (main blockchains like Ethereum, BNB Chain, Avalanche) and Layer-2 (faster, cheaper networks built on top: Base, Arbitrum, Optimism, Polygon).*
+
+> **Which network should I pick?**
+> - **Ethereum** — most tokens available, but gas fees can be $2–$20 per transaction
+> - **Base or Arbitrum** — same tokens, gas fees usually under $0.10
+> - **BNB Chain** — cheapest gas, good for BEP-20 tokens
+>
+> If you're new, start with **Base** or **Arbitrum** to keep fees low.
+
+After selecting, your wallet may ask you to "Switch Network" — approve it.
+
+---
+
+### Step 3 — Enter Your Swap
+
+![KyberSwap swap: 0.1 ETH to 250 USDC with quote](screenshots/kyberswap/tutorial/step3_amount_entered_quote.png)
+*0.1 ETH typed in. KyberSwap instantly calculates the output: ~250.4 USDC. The rate, minimum received, and price impact all update in real time.*
+
+**How to swap:**
+1. Top field = **what you're selling** — click the token name to change it, or just type the amount
+2. Bottom field = **what you want to receive** — click "USDC" to search for a different token
+3. Type your amount in the top field — the output updates automatically
+4. Check these three numbers before clicking Swap:
+
+| Number | What it means | What's safe |
+|--------|--------------|-------------|
+| **Rate** | How many output tokens per 1 input token | Just check it looks reasonable |
+| **Minimum Received** | Worst case you'll accept — if rate drops below this, the swap cancels | Already calculated for you |
+| **Price Impact** | How much your trade moves the market | Under 1% = fine. Over 5% = split into smaller trades |
+
+5. Click **"Swap"** → your wallet opens a confirmation → approve → done in seconds
+
+> **Slippage:** The gear icon next to "Max Slippage" sets how much price movement you'll tolerate. Default 0.5% is fine for most trades. Lower it to 0.1% for stablecoin swaps (USDC/USDT). Raise to 1–2% only for small-cap tokens.
+
+---
+
+### Step 4 — Set a Limit Order (Optional, for experienced traders)
+
+A limit order lets you say: *"I want to buy ETH, but only if the price drops to $2,400."* KyberSwap will wait and execute automatically when that price is hit — you don't have to watch the screen.
+
+![KyberSwap Limit Order tab with live order book](screenshots/kyberswap/tutorial/step4_limit_order_tab.png)
+*The Limit Order tab. Left side: set your sell token, rate target, and buy token. Right side: live order book showing real open orders from other users — SELLING WETH at various rates, BUYING WETH at lower rates.*
+
+**How to place a limit order:**
+1. Click **"Limit Order"** tab (next to Swap)
+2. Top field = token you're selling, bottom = token you want
+3. The **Rate** field shows the current market price — change it to your target price
+4. Quick buttons (+10%, +20%, +50%) set a target above market; negative buttons set below
+5. Enter the amount → click **"Connect"** (or **"Place Order"** if connected)
+6. Sign in your wallet — this is a **gasless sign**, no blockchain fee yet
+7. The order sits in "My Orders" until the market hits your price, then executes automatically
+
+> **Free until it fills:** You pay no gas fee to place the order. Gas is only charged when the order actually executes.
 
 ---
 
