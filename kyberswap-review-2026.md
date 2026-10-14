@@ -184,15 +184,43 @@ When someone opens your link, they see the standard KyberSwap swap interface wit
 
 ## How to Use Someone Else's Referral Link
 
-If you receive a KyberSwap tip/referral link:
+When someone shares a KyberSwap tip link with you, here is exactly what happens at each step.
 
-1. Click the shared URL — it opens KyberSwap with the token pair pre-filled
-2. Connect your wallet and review the swap as normal
-3. A small **"Tip"** section appears below the swap details — you can set the tip amount or set it to 0
-4. The swap rate is identical whether you tip or not
-5. Confirm the transaction
+### Step 1 — Click the Link
 
-> Tips go 100% to the link creator. KyberSwap does not take a cut.
+The URL looks like:
+```
+https://kyberswap.com/swap/ethereum?inputCurrency=ETH&outputCurrency=0xA0b86991...&feeReceiver=0xSHARER_WALLET&enableTip=true
+```
+
+KyberSwap opens with the **token pair pre-filled** by the link creator. In the example below, the link pre-configured ETH → USDC on Ethereum.
+
+**Desktop view after opening a referral link:**
+![KyberSwap referral link - desktop](screenshots/kyberswap/use-ref/desktop.png)
+*The swap interface opens with ETH → USDC already selected. No login required to see the quote — you can review the rate before connecting anything.*
+
+**Mobile view after opening a referral link:**
+![KyberSwap referral link - phone](screenshots/kyberswap/use-ref/phone.png)
+*Same experience on phone: pair pre-filled, rate shown, compact layout. The swap works identically across devices.*
+
+### Step 2 — Connect Wallet and Review
+
+1. Click **"Connect"** and choose your wallet
+2. Check the swap details: Rate, Minimum Received, Price Impact
+3. The swap rate is **identical** to what you'd get by going to kyberswap.com directly — the referral link does not change routing or pricing
+
+### Step 3 — Tip at Confirmation (Optional)
+
+When you click "Swap", the confirmation dialog includes a **Tip** field:
+- The suggested tip amount is shown (e.g., 0.1% of swap value)
+- You can set it to **0** — the swap goes through at the same rate regardless
+- If you choose to tip, it is sent directly to the sharer's wallet inside the same transaction
+
+> **Tips go 100% to the link creator. KyberSwap takes no cut from tips.**
+
+### What the `feeReceiver` parameter means
+
+Every tip link contains a `feeReceiver=0x...` parameter — the wallet address that receives tips. This is fully visible in the URL so you always know exactly who benefits before you trade.
 
 ---
 
@@ -269,3 +297,4 @@ The chain coverage and zero-fee aggregation are genuinely competitive. The Tip L
 ---
 
 *Last verified: October 14, 2026. Screenshots taken live from kyberswap.com.*
+

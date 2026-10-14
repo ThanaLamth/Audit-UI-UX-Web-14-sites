@@ -1,0 +1,8 @@
+{
+  "url": "https://kyberswap.com/swap/ethereum?inputCurrency=ETH&outputCurrency=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&feeReceiver=0x0DA2a82ED2c387d1751ccbAf999A80b65bdb269E&enableTip=true",
+  "screenshots": {
+    "desktop": "screenshots\\kyberswap\\use-ref\\desktop.png",
+    "tablet": "screenshots\\kyberswap\\use-ref\\tablet.png",
+    "phone": "screenshots\\kyberswap\\use-ref\\phone.png"
+  }
+}
