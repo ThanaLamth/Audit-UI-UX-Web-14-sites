@@ -1,0 +1,77 @@
+{
+    "site": "https://coincu.com",
+    "audit_date": "2026-10-15",
+    "proxy": "185.169.252.191:8323",
+    "auditor": "TinyFish Agent + Codex AI",
+    "pages": {
+        "homepage": {
+            "url": "https://coincu.com/",
+            "title": "Coincu | Crypto News, Prices & Market Data",
+            "title_len": 43,
+            "meta_desc": "Intelligence, news, prices, and structured data for the crypto economy.",
+            "meta_desc_len": 67,
+            "canonical": "https://coincu.com/",
+            "h1_count": 1,
+            "h1_texts": ["Coincu: Crypto News, Prices and Market Data"],
+            "imgs_no_alt": 33,
+            "has_viewport": false,
+            "jsonld_count": 0,
+            "og_image": "",
+            "status": 200
+        },
+        "news": {
+            "url": "https://coincu.com/news/",
+            "title": "Coincu - Crypto News & Market Data",
+            "title_len": 37,
+            "meta_desc": "",
+            "meta_desc_len": 0,
+            "canonical": "",
+            "h1_count": 0,
+            "h1_texts": [],
+            "imgs_no_alt": 26,
+            "has_viewport": false,
+            "jsonld_count": 0,
+            "status": 200
+        },
+        "coins": {
+            "url": "https://coincu.com/coins/",
+            "title": "Cryptocurrency Prices & Market Cap Rankings \u2014 Coincu",
+            "title_len": 54,
+            "meta_desc": "Track the latest cryptocurrency prices, market cap rankings, charts, and more. Discover the top crypto coins with Coincu's comprehensive market data.",
+            "meta_desc_len": 147,
+            "canonical": "https://coincu.com/coins/",
+            "h1_count": 0,
+            "h1_texts": [],
+            "imgs_no_alt": 156,
+            "has_viewport": true,
+            "jsonld_count": 0,
+            "status": 200
+        },
+        "glossary": {
+            "url": "https://coincu.com/glossary/",
+            "title": "Cryptocurrency Glossary: A-Z Web3 Terms \u2014 Coincu",
+            "title_len": 58,
+            "meta_desc": "A-Z definitions for crypto, DeFi, blockchain, and Web3 \u2014 from 51% attacks to zero-knowledge proofs.",
+            "meta_desc_len": 104,
+            "canonical": "https://coincu.com/glossary/",
+            "h1_count": 1,
+            "h1_texts": ["Crypto Glossary"],
+            "imgs_no_alt": 28,
+            "has_viewport": true,
+            "jsonld_count": 0,
+            "status": 200
+        },
+        "predictions": {
+            "url": "https://coincu.com/predictions/",
+            "status": "cloudflare_challenge",
+            "note": "Cloudflare bot challenge blocked TinyFish agent"
+        }
+    },
+    "tech_stack": {
+        "framework": "Next.js 16",
+        "deployment": "Railway",
+        "fonts": ["Arimo", "JetBrains Mono", "Space Mono"],
+        "css": "Tailwind CSS + custom Neo-Brutalist design system",
+        "api": "WordPress REST API (headless)"
+    }
+}

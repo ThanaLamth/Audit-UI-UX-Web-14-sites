@@ -1,0 +1,39 @@
+{
+    "slug": "coincu.com",
+    "site": "https://coincu.com",
+    "audit_date": "2026-10-15",
+    "categories": {
+        "technical_seo": {
+            "score": 13,
+            "grade": "C",
+            "max": 25
+        },
+        "performance": {
+            "score": 15,
+            "grade": "B",
+            "max": 20
+        },
+        "eeat": {
+            "score": 11,
+            "grade": "B",
+            "max": 15
+        },
+        "security": {
+            "score": 5,
+            "grade": "D",
+            "max": 15
+        },
+        "geo": {
+            "score": 5,
+            "grade": "C",
+            "max": 10
+        },
+        "ui_ux": {
+            "score": 13,
+            "grade": "C+",
+            "max": 20
+        }
+    },
+    "overall": 62,
+    "max": 100
+}
